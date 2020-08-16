@@ -15,7 +15,7 @@ DATABASES = {
         'NAME': 'django_web',
         'USER': 'django_web',
         'PASSWORD': 'django_web',
-        'HOST': 'dev-db',
+        'HOST': 'db',
         'PORT': 5432
     },
 }

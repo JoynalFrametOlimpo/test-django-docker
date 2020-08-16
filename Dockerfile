@@ -1,17 +1,13 @@
-FROM python:3.7
+FROM python:3.8
 
-ARG APP_NAME=web
-ARG WORKDIR=/usr/src/app
-ARG REQUIREMENTS=requirements/development.txt
+WORKDIR /app
 
-WORKDIR ${WORKDIR}
-
-# copy sources
-COPY ./${APP_NAME} ./${APP_NAME}
+COPY ./web ./app
 COPY manage.py entrypoint.sh ./
 
-# apply requirements
-COPY ${REQUIREMENTS} ./requirements.txt
-RUN pip install -r requirements.txt
+COPY requirements.txt ./requirements.txt
+RUN pip3 install -r requirements.txt
+
+RUN ["chmod", "+x", "./entrypoint.sh"]
 
 EXPOSE 8000

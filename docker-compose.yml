@@ -1,43 +1,42 @@
 version: "3.7"
 
 services:
-  dev-web:
-    container_name: dev-web
+  web:
+    container_name: web
     networks:
-      - web-network
+      - network-django
     build:
       context: .
       dockerfile: Dockerfile
     restart: always
     volumes:
-      - ./web:/usr/src/app/web
+      - ./web:/app/web
     depends_on:
-      - dev-db
+      - db
     links:
-      - dev-db
+      - db
     command: ["./entrypoint.sh"]
     ports:
-      - "127.0.0.20:8000:8000"
+      - "9000:8000"
 
-  dev-db:
-    container_name: dev-db
+  db:
+    container_name: db
     networks:
-      - web-network
-    image: postgres:10.7
+      - network-django
+    image: postgres:12-alpine
     restart: always
     volumes:
-      - dev-db-volume:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=django_web
       - POSTGRES_PASSWORD=django_web
       - POSTGRES_DB=django_web
     command: ["--autovacuum=off"]
     ports:
-      - "127.0.0.21:5432:5432"
+      - "5432:5432"
 
 networks:
-  web-network:
+  network-django:
 
 volumes:
-  dev-db-volume:
-    external: true
+  db:

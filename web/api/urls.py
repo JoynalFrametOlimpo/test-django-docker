@@ -8,6 +8,6 @@ from .views import sample_api
 router = routers.DefaultRouter()
 
 urlpatterns = [
-    url(r"^", include(router.urls)),
-    url(r"^sample_api", sample_api),
+    url("", include(router.urls)),
+    url("sample_api", sample_api),
 ]
